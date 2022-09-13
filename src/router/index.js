@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import ProductFeedback from "../views/ProductFeedback.vue";
+import FeedbackDetail from "../views/FeedbackDetail.vue";
 import AddFeedback from "../views/AddFeedback.vue";
 import EditFeedback from "../views/EditFeedback.vue";
 import Roadmap from "../views/Roadmap.vue";
@@ -11,9 +11,10 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/product-feedback",
-    name: "product",
-    component: ProductFeedback,
+    path: "/feedback/:id",
+    name: "FeedbackDetail",
+    component: FeedbackDetail,
+    props: true,
   },
   {
     path: "/roadmap",
@@ -26,9 +27,10 @@ const routes = [
     component: AddFeedback,
   },
   {
-    path: "/edit-feedback",
-    name: "edit feedback",
+    path: "/edit-feedback/:id",
+    name: "edit-feedback",
     component: EditFeedback,
+    props: true,
   },
 ];
 
