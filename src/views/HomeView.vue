@@ -68,7 +68,14 @@
               <h3>{{ state.upvotes }}</h3>
             </div>
           </div>
-          <div class="home__category" @click="toRoute('/feedback', state.id)">
+          <div
+            class="home__category"
+            @click="
+              router.push({
+                path: `/feedback/${state.id}`,
+              })
+            "
+          >
             <h2>{{ state.title }}</h2>
             <h4>{{ state.description }}</h4>
 
@@ -89,7 +96,7 @@
 <script>
 import { ref, watchEffect } from "vue";
 import createStore from "../store/index";
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 let category = ref("all");
 const Store = createStore.state.Data.productRequests;
@@ -97,7 +104,7 @@ const live = Store.filter((state) => state.status === "live");
 const InProgress = Store.filter((state) => state.status === "in-progress");
 const Planned = Store.filter((state) => state.status === "planned");
 let Productrequest = ref(Store);
-const router = useRoute();
+
 watchEffect(() => {
   const Store = createStore.state.Data.productRequests;
   switch (category.value) {
@@ -132,6 +139,10 @@ watchEffect(() => {
 });
 export default {
   name: "HomeView",
+  setup() {
+    const router = useRouter();
+    return { router };
+  },
   data() {
     return {
       Categories: [],
@@ -165,8 +176,6 @@ export default {
     toRoute(route, id) {
       if (id === 0) {
         this.$router.push(route);
-      } else {
-        router.push({ path: `/feedback/:1` });
       }
     },
   },

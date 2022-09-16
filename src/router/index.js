@@ -11,6 +11,10 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/home",
+    redirect: "/",
+  },
+  {
     path: "/feedback/:id",
     name: "FeedbackDetail",
     component: FeedbackDetail,

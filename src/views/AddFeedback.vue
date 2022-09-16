@@ -89,6 +89,9 @@ export default {
       alert("successsful");
       this.$router.push("/");
     },
+    goBack() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>

@@ -1,9 +1,9 @@
 <template>
   <main class="container">
     <header class="add__header">
-      <router-link to="/" class="add__link">
+      <a @click="goBack" class="add__link">
         <i class="fa-solid fa-angle-left"></i>
-        go back</router-link
+        go back</a
       >
     </header>
     <section class="edit__section">
@@ -76,34 +76,36 @@
 
 <script>
 import createStore from "../store/index";
-// import { ref } from "vue";
-// const route = useRoute();
+import { useRoute } from "vue-router";
+
 const store = createStore.state.Data.productRequests;
-const state = store.find((state) => state.id === 5);
 
 export default {
   name: "EditFeedback",
-  data() {
+  setup() {
+    const route = useRoute();
+    const ID = route.params.id;
+    const state = store.find((state) => state.id === Number(ID));
     return {
       title: state.title,
       state,
       category: state.category,
       description: state.description,
       status: state.status,
-      ID: 0,
     };
   },
   methods: {
     onDelete() {
       const props = {
-        id: state.id,
+        id: this.state.id,
       };
       createStore.dispatch("deleteFeedback", props);
+      alert(`deleted ${this.state.title}`);
       this.$router.push("/");
     },
     OnSubmit() {
       const props = {
-        id: state.id,
+        id: this.state.id,
         title: this.title,
         category: this.category,
         description: this.description,
@@ -111,8 +113,8 @@ export default {
       };
       createStore.dispatch("editFeedback", props);
     },
-    created() {
-      this.ID = this.$route.params.id;
+    goBack() {
+      this.$router.go(-1);
     },
   },
 };

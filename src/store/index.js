@@ -40,7 +40,6 @@ export default createStore({
         (state) => state.id !== props.id
       );
       state.Data.productRequests = newState;
-      console.log(state.Data.productRequests);
     },
     postCommment(state, props) {
       state.Data.productRequests

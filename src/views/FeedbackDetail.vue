@@ -1,9 +1,9 @@
 <template>
   <main class="container">
     <header class="feedback__header">
-      <router-link to="/" class="add__link">
+      <a @click="goBack" class="add__link">
         <i class="fa-solid fa-angle-left"></i>
-        go back</router-link
+        go back</a
       >
       <button class="feedback__buttons--edit--button" @click="toRoute">
         edit feedback
@@ -71,13 +71,16 @@
             rows="10"
             placeholder="Type your comments here"
           ></textarea>
-          <button type="submit" class="feedback__submit--button">
-            post comment
-          </button>
+          <div>
+            <h5>{{ CalculateTextLength() }} characters left</h5>
+            <button type="submit" class="feedback__submit--button">
+              post comment
+            </button>
+          </div>
         </form>
       </div>
     </section>
-    <footer class="feedback__footer">{{ CalculateTextLength() }}</footer>
+    <footer class="feedback__footer"></footer>
   </main>
 </template>
 
@@ -85,20 +88,23 @@
 // @ is an alias to /src
 import createStore from "../store/index";
 import { useRoute } from "vue-router";
-import { watchEffect } from "vue";
 
-const route = useRoute;
-watchEffect(() => {
-  console.log(route.params);
-});
 const Store = createStore.state.Data.productRequests;
 const Commenter = createStore.state.Data.currentUser;
-const state = Store.find((state) => state.id === 7);
+
 export default {
   name: "FeedbackDetail",
-  data() {
+  setup() {
+    const route = useRoute();
+    const ID = route.params.id;
+    const state = Store.find((state) => state.id === Number(ID));
+
     return {
       state,
+    };
+  },
+  data() {
+    return {
       text: "",
       // eslint-disable-next-line no-undef
     };
@@ -114,7 +120,7 @@ export default {
       createStore.dispatch("updateVote", { id: id });
     },
     toRoute() {
-      this.$router.push(`/edit-feedback/:${state.id}`);
+      this.$router.push(`/edit-feedback/${Number(this.state.id)}`);
     },
     OnSubmit() {
       const props = {
@@ -126,7 +132,10 @@ export default {
           username: Commenter.username,
         },
       };
-      createStore.dispatch("postCommment", { id: state.id, props });
+      createStore.dispatch("postCommment", { id: this.$state.id, props });
+    },
+    goBack() {
+      this.$router.go(-1);
     },
   },
 };
@@ -234,6 +243,7 @@ export default {
 .feedback__comment--content {
   margin: -1rem 0rem 2rem 6rem;
   text-align: start;
+  min-height: 3rem;
   font-size: 15px;
   color: #647196;
   font-weight: 400;
@@ -261,21 +271,30 @@ export default {
     background-color: #f7f8fd;
     outline: none;
   }
-  button {
-    float: right;
-    margin-top: 1rem;
-    padding: 0rem 1rem;
-    height: 2.3rem;
-    border-radius: 5px;
-    outline: none;
-    border: solid 1px transparent;
-    text-transform: capitalize;
-    font-weight: 600;
-    color: #f2f4fe;
-    background-color: #ad1fea;
-    cursor: pointer;
-    &:hover {
-      background-color: #c75af6;
+  div {
+    display: flex;
+    height: 3rem;
+    justify-content: space-between;
+    button {
+      margin-top: 0rem;
+      padding: 0rem 1rem;
+      height: 2.3rem;
+      border-radius: 5px;
+      outline: none;
+      border: solid 1px transparent;
+      text-transform: capitalize;
+      font-weight: 600;
+      color: #f2f4fe;
+      background-color: #ad1fea;
+      cursor: pointer;
+      &:hover {
+        background-color: #c75af6;
+      }
+    }
+    h5 {
+      color: #647196;
+      font-size: 15px;
+      font-weight: 600;
     }
   }
 }
