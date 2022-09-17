@@ -170,7 +170,7 @@ export default {
     cursor: pointer;
   }
   .feedback__section {
-    width: 90%;
+    width: 100%;
     margin: 1rem auto 2rem;
   }
   .feedback__comments {
