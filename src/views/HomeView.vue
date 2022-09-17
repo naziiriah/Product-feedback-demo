@@ -419,7 +419,7 @@ export default {
     .home__voted--active {
       height: 2.3rem;
       width: 6rem;
-      margin: 1rem auto;
+      margin: 1rem 5%;
       color: #f2f4fe;
       background-color: #4661e6;
       font-weight: 600;
@@ -427,6 +427,7 @@ export default {
       display: flex;
       justify-content: space-around;
       cursor: pointer;
+      float: left;
       i {
         margin-top: 0.6rem;
         font-weight: 600;
