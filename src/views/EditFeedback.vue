@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main class="container__edit">
     <header class="add__header">
       <a @click="goBack" class="add__link">
         <i class="fa-solid fa-angle-left"></i>
@@ -64,7 +64,7 @@
             <div class="add__buttons">
               <button class="add__button--cancel">cancel</button>
               <button class="add__button--add" type="submit">
-                add feedback
+                save changes
               </button>
             </div>
           </div>
@@ -121,30 +121,111 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.edit__section {
-  width: 35%;
-  height: 45rem;
-  margin: 1rem auto 0rem;
-  background-color: #fff;
-  border-radius: 7px;
-  border: solid transparent 1px;
+@media screen and (max-width: 600px) {
+  .container__edit {
+    width: 100%;
+    background-color: #f2f2f2;
+    min-height: 140vh;
+  }
+  .add__buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  .add__button--add {
+    order: 1;
+  }
+  .edit__section {
+    width: 90%;
+    min-height: 45rem;
+    margin: 1rem auto 0rem;
+    background-color: #fff;
+    border-radius: 7px;
+    border: solid transparent 1px;
+  }
+  .edit__buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .edit__delete {
+    width: 100%;
+    height: 2rem;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    color: #f2f4fe;
+    border: solid transparent 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #d73737;
+    order: 2;
+  }
 }
-.edit__buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+@media screen and (max-width: 1100px) and (min-width: 600px) {
+  .edit__section {
+    width: 60%;
+    height: 45rem;
+    margin: 1rem auto 0rem;
+    background-color: #fff;
+    border-radius: 7px;
+    border: solid transparent 1px;
+  }
+  .edit__buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .edit__delete {
+    padding: 0rem 10px;
+    height: 2rem;
+    margin-left: 1rem;
+    text-transform: capitalize;
+    color: #f2f4fe;
+    border: solid transparent 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #d73737;
+  }
+  .container__edit {
+    width: 100%;
+    background-color: #f2f2f2;
+    min-height: 120vh;
+  }
 }
-.edit__delete {
-  padding: 0rem 10px;
-  height: 2rem;
-  margin-left: 1rem;
-  text-transform: capitalize;
-  color: #f2f4fe;
-  border: solid transparent 2px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 5px;
-  background-color: #d73737;
+@media screen and (min-width: 1100px) {
+  .edit__section {
+    width: 35%;
+    height: 43rem;
+    margin: 1rem auto 0rem;
+    background-color: #fff;
+    border-radius: 7px;
+    border: solid transparent 1px;
+  }
+  .edit__buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .edit__delete {
+    padding: 0rem 10px;
+    height: 2rem;
+    margin-left: 1rem;
+    text-transform: capitalize;
+    color: #f2f4fe;
+    border: solid transparent 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #d73737;
+  }
+  .container__edit {
+    width: 100%;
+    background-color: #f2f2f2;
+    min-height: 130vh;
+  }
 }
 </style>

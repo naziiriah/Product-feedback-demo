@@ -132,7 +132,10 @@ export default {
           username: Commenter.username,
         },
       };
-      createStore.dispatch("postCommment", { id: this.$state.id, props });
+      createStore.dispatch("postCommment", {
+        id: this.state.id,
+        props,
+      });
     },
     goBack() {
       this.$router.go(-1);
@@ -141,160 +144,320 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.feedback__header {
-  width: 70%;
-  margin: 0rem auto;
-  height: 3rem;
-  padding-top: 3rem;
-  text-transform: capitalize;
-  text-align: start;
-  display: flex;
-  justify-content: space-between;
-}
-.feedback__buttons--edit--button {
-  padding: 0px 12px;
-  color: #f2f4fe;
-  background-color: #4661e6;
-  border-radius: 8px;
-  border: solid 2px transparent;
-  text-transform: capitalize;
-  font-size: 14px;
-  font-weight: bold;
-  height: 2.5rem;
-  margin-top: -0.9rem;
-  cursor: pointer;
-}
-.feedback__section {
-  width: 70%;
-  margin: 1rem auto 2rem;
-}
-.feedback__comments {
-  width: 70%;
-  margin: 1rem auto 1rem;
-  background-color: #fff;
-  min-height: 4rem;
-  border-radius: 8px;
-}
-.feedback__add__comments {
-  width: 70%;
-  margin: 2rem auto 0rem;
-  background-color: #fff;
-  min-height: 13rem;
-  border-radius: 8px;
-}
-.feedback__container {
-  width: 90%;
-  margin: 2rem auto;
-  h4 {
-    word-spacing: 6px;
-    text-align: start;
-    line-height: 4rem;
-    font-size: 14px;
-    color: #3a4374;
-    font-weight: bold;
-    text-transform: capitalize;
-  }
-}
-.feedback__comment {
-  width: 100%;
-  margin: 0.3rem 0rem;
-}
-.feedback__comment--head {
-  display: flex;
-  justify-content: space-between;
-  height: 4rem;
-  width: 100%;
-  img {
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-  h2 {
-    color: #4661e6;
-    text-transform: capitalize;
-    font-size: 13px;
-    font-weight: 600;
-  }
-  div {
-    width: 40rem;
+<style lang="scss">
+@media screen and (min-width: 600px) and (max-width: 1100px) {
+  .feedback__header {
+    width: 95%;
+    margin: 0rem auto;
     height: 3rem;
-    h2 {
-      width: 100%;
+    padding-top: 3rem;
+    text-transform: capitalize;
+    text-align: start;
+    display: flex;
+    justify-content: space-between;
+  }
+  .feedback__buttons--edit--button {
+    padding: 0px 12px;
+    color: #f2f4fe;
+    background-color: #4661e6;
+    border-radius: 8px;
+    border: solid 2px transparent;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: bold;
+    height: 2.5rem;
+    margin-top: -0.9rem;
+    cursor: pointer;
+  }
+  .feedback__section {
+    width: 100%;
+    margin: 1rem auto 2rem;
+  }
+  .feedback__comments {
+    width: 95%;
+    margin: 1rem auto 1rem;
+    background-color: #fff;
+    min-height: 4rem;
+    border-radius: 8px;
+  }
+  .feedback__add__comments {
+    width: 96%;
+    margin: 2rem auto 0rem;
+    background-color: #fff;
+    min-height: 13rem;
+    border-radius: 8px;
+  }
+  .feedback__container {
+    width: 90%;
+    margin: 2rem auto;
+    h4 {
+      word-spacing: 6px;
       text-align: start;
-      display: flex;
-      justify-content: flex-start;
-      margin-bottom: -1.5rem;
+      line-height: 4rem;
+      font-size: 14px;
       color: #3a4374;
       font-weight: bold;
-      font-size: 14px;
-    }
-    h4 {
-      width: 100%;
-      text-align: start;
-      display: flex;
-      justify-content: flex-start;
-      color: #647196;
-      font-size: 14px;
-      font-weight: 400;
-    }
-  }
-}
-.feedback__comment--content {
-  margin: -1rem 0rem 2rem 6rem;
-  text-align: start;
-  min-height: 3rem;
-  font-size: 15px;
-  color: #647196;
-  font-weight: 400;
-}
-.feedback__footer {
-  width: 100%;
-  height: 3rem;
-}
-.feedback__post {
-  width: 100%;
-  textarea {
-    width: 100%;
-    height: 4rem;
-    padding-left: 2%;
-    font-size: 15px;
-    border-radius: 6px;
-    border: solid 2px transparent;
-    background-color: #f7f8fd;
-    color: #4661e6;
-  }
-  textarea:hover,
-  textarea:active,
-  textarea:focus {
-    border: solid 2px #4661e6;
-    background-color: #f7f8fd;
-    outline: none;
-  }
-  div {
-    display: flex;
-    height: 3rem;
-    justify-content: space-between;
-    button {
-      margin-top: 0rem;
-      padding: 0rem 1rem;
-      height: 2.3rem;
-      border-radius: 5px;
-      outline: none;
-      border: solid 1px transparent;
       text-transform: capitalize;
+    }
+  }
+  .feedback__comment {
+    width: 100%;
+    margin: 0.3rem 0rem;
+  }
+  .feedback__comment--head {
+    display: flex;
+    justify-content: space-between;
+    height: 4rem;
+    width: 100%;
+    img {
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+    h2 {
+      color: #4661e6;
+      text-transform: capitalize;
+      font-size: 13px;
       font-weight: 600;
-      color: #f2f4fe;
-      background-color: #ad1fea;
-      cursor: pointer;
-      &:hover {
-        background-color: #c75af6;
+    }
+    div {
+      width: 40rem;
+      height: 3rem;
+      h2 {
+        width: 100%;
+        text-align: start;
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: -1.5rem;
+        color: #3a4374;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      h4 {
+        width: 100%;
+        text-align: start;
+        display: flex;
+        justify-content: flex-start;
+        color: #647196;
+        font-size: 14px;
+        font-weight: 400;
       }
     }
-    h5 {
-      color: #647196;
+  }
+  .feedback__comment--content {
+    margin: -1rem 0rem 2rem 6rem;
+    text-align: start;
+    min-height: 3rem;
+    font-size: 15px;
+    color: #647196;
+    font-weight: 400;
+  }
+  .feedback__footer {
+    width: 100%;
+    height: 3rem;
+  }
+  .feedback__post {
+    width: 100%;
+    textarea {
+      width: 100%;
+      height: 4rem;
+      padding-left: 2%;
       font-size: 15px;
+      border-radius: 6px;
+      border: solid 2px transparent;
+      background-color: #f7f8fd;
+      color: #4661e6;
+    }
+    textarea:hover,
+    textarea:active,
+    textarea:focus {
+      border: solid 2px #4661e6;
+      background-color: #f7f8fd;
+      outline: none;
+    }
+    div {
+      display: flex;
+      height: 3rem;
+      justify-content: space-between;
+      button {
+        margin-top: 0rem;
+        padding: 0rem 1rem;
+        height: 2.3rem;
+        border-radius: 5px;
+        outline: none;
+        border: solid 1px transparent;
+        text-transform: capitalize;
+        font-weight: 600;
+        color: #f2f4fe;
+        background-color: #ad1fea;
+        cursor: pointer;
+        &:hover {
+          background-color: #c75af6;
+        }
+      }
+      h5 {
+        color: #647196;
+        font-size: 15px;
+        font-weight: 600;
+      }
+    }
+  }
+}
+@media screen and (min-width: 1100px) {
+  .feedback__header {
+    width: 70%;
+    margin: 0rem auto;
+    height: 3rem;
+    padding-top: 3rem;
+    text-transform: capitalize;
+    text-align: start;
+    display: flex;
+    justify-content: space-between;
+  }
+  .feedback__buttons--edit--button {
+    padding: 0px 12px;
+    color: #f2f4fe;
+    background-color: #4661e6;
+    border-radius: 8px;
+    border: solid 2px transparent;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: bold;
+    height: 2.5rem;
+    margin-top: -0.9rem;
+    cursor: pointer;
+  }
+  .feedback__section {
+    width: 70%;
+    margin: 1rem auto 2rem;
+  }
+  .feedback__comments {
+    width: 70%;
+    margin: 1rem auto 1rem;
+    background-color: #fff;
+    min-height: 4rem;
+    border-radius: 8px;
+  }
+  .feedback__add__comments {
+    width: 70%;
+    margin: 2rem auto 0rem;
+    background-color: #fff;
+    min-height: 13rem;
+    border-radius: 8px;
+  }
+  .feedback__container {
+    width: 90%;
+    margin: 2rem auto;
+    h4 {
+      word-spacing: 6px;
+      text-align: start;
+      line-height: 4rem;
+      font-size: 14px;
+      color: #3a4374;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+  }
+  .feedback__comment {
+    width: 100%;
+    margin: 0.3rem 0rem;
+  }
+  .feedback__comment--head {
+    display: flex;
+    justify-content: space-between;
+    height: 4rem;
+    width: 100%;
+    img {
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+    h2 {
+      color: #4661e6;
+      text-transform: capitalize;
+      font-size: 13px;
       font-weight: 600;
+    }
+    div {
+      width: 40rem;
+      height: 3rem;
+      h2 {
+        width: 100%;
+        text-align: start;
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: -1.5rem;
+        color: #3a4374;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      h4 {
+        width: 100%;
+        text-align: start;
+        display: flex;
+        justify-content: flex-start;
+        color: #647196;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
+  .feedback__comment--content {
+    margin: -1rem 0rem 2rem 6rem;
+    text-align: start;
+    min-height: 3rem;
+    font-size: 15px;
+    color: #647196;
+    font-weight: 400;
+  }
+  .feedback__footer {
+    width: 100%;
+    height: 3rem;
+  }
+  .feedback__post {
+    width: 100%;
+    textarea {
+      width: 100%;
+      height: 4rem;
+      padding-left: 2%;
+      font-size: 15px;
+      border-radius: 6px;
+      border: solid 2px transparent;
+      background-color: #f7f8fd;
+      color: #4661e6;
+    }
+    textarea:hover,
+    textarea:active,
+    textarea:focus {
+      border: solid 2px #4661e6;
+      background-color: #f7f8fd;
+      outline: none;
+    }
+    div {
+      display: flex;
+      height: 3rem;
+      justify-content: space-between;
+      button {
+        margin-top: 0rem;
+        padding: 0rem 1rem;
+        height: 2.3rem;
+        border-radius: 5px;
+        outline: none;
+        border: solid 1px transparent;
+        text-transform: capitalize;
+        font-weight: 600;
+        color: #f2f4fe;
+        background-color: #ad1fea;
+        cursor: pointer;
+        &:hover {
+          background-color: #c75af6;
+        }
+      }
+      h5 {
+        color: #647196;
+        font-size: 15px;
+        font-weight: 600;
+      }
     }
   }
 }
