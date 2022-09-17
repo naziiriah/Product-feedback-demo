@@ -62,7 +62,9 @@
           <div class="edit__buttons">
             <button class="edit__delete" @click="onDelete">delete</button>
             <div class="add__buttons">
-              <button class="add__button--cancel">cancel</button>
+              <button class="add__button--cancel" @click="refactor">
+                cancel
+              </button>
               <button class="add__button--add" type="submit">
                 save changes
               </button>
@@ -100,7 +102,6 @@ export default {
         id: this.state.id,
       };
       createStore.dispatch("deleteFeedback", props);
-      alert(`deleted ${this.state.title}`);
       this.$router.push("/");
     },
     OnSubmit() {
@@ -115,6 +116,9 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+    },
+    refactor() {
+      this.$router.go();
     },
   },
 };

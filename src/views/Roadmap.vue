@@ -150,8 +150,187 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen and (max-width: 600px) {
+  .container {
+    width: 100%;
+    background-color: #f2f2f2;
+  }
+  .roadmap__header {
+    width: 100%;
+    margin: 0rem auto 2rem;
+    height: 6rem;
+    background-color: #373f68;
+    nav {
+      float: left;
+      .roadmap__link {
+        color: #fff;
+        font-size: 20;
+        font-weight: 400;
+        text-transform: capitalize;
+        text-align: start;
+        float: left;
+        text-decoration: none;
+        cursor: pointer;
+        margin-bottom: 0.3rem;
+      }
+      .roadmap__link:hover {
+        text-decoration: underline;
+      }
+      h2 {
+        color: #fff;
+        font-size: 24;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+    }
+  }
+  .roadmap__main {
+    width: 90%;
+    margin: 0rem auto;
+    min-height: 130rem;
+  }
+  .roadmap__section {
+    align-content: flex-start;
+    width: 100%;
+  }
+  .roadmap__live {
+    min-height: 15rem;
+    width: 100%;
+    margin: 0rem auto 2rem;
+    border-top: solid 4px #62bcfa;
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+    background-color: #fff;
+  }
+  .roadmap__planned {
+    min-height: 15rem;
+    width: 100%;
+    margin: 0rem auto 2rem;
+    border-top: solid 4px #f49f85;
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+    background-color: #fff;
+  }
+  .roadmap__inprogress {
+    min-height: 15rem;
+    width: 100%;
+    margin: 0rem auto 2rem;
+    border-top: solid 4px #ad1fea;
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+    background-color: #fff;
+  }
+  .roadmap__mini__title {
+    width: 100%;
+    margin: auto;
+    height: 5rem;
+    text-align: start;
+    h2 {
+      color: #3a4374;
+      font-size: 18px;
+      line-height: 2rem;
+      font-family: bold;
+    }
+    p {
+      color: #647196;
+      font-size: 16px;
+    }
+  }
+  .roadmap__category__container {
+    width: 90%;
+    margin: 1rem auto 0rem;
+    button {
+      padding: 4px 16px;
+      float: left;
+      margin-top: 1.5rem;
+      background-color: #f2f4ff;
+      color: #4661e6;
+      border-radius: 8px;
+      border: solid transparent 4px;
+      text-transform: capitalize;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  }
+  .roadmap--count {
+    display: flex;
+    justify-content: flex-start;
+    height: 1.8rem;
+    span {
+      height: 0.4rem;
+      width: 0.4rem;
+      border-radius: 50%;
+      margin-top: 0.4rem;
+    }
+    h3 {
+      text-transform: capitalize;
+      font-size: 16px;
+      color: #647196;
+      font-weight: 500;
+      margin-left: 0.5rem;
+    }
+    .roadmap__design--live {
+      background-color: #62bcfa;
+    }
+    .roadmap__design--inprogress {
+      background-color: #ad1fea;
+    }
+    .roadmap__design--planned {
+      background-color: #f49f85;
+    }
+  }
+  .roadmap__status__title {
+    text-align: start;
+    font-size: 18px;
+    font-weight: bold;
+    color: #3a4374;
+    font-family: jost;
+  }
+  .roadmap__status__details {
+    color: #647196;
+    text-align: start;
+    font-size: 15px;
+    line-height: 20px;
+    margin-top: 0.4rem;
+  }
+  .roadmap__comments__likes {
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 4.5rem;
+  }
+  .roadmap__comments__upvotes__deactive {
+    width: 4rem;
+    border: solid 3px transparent;
+    padding-top: 0.5rem;
+    height: 1.4rem;
+    background-color: #f2f4fe;
+    color: #3a4374;
+    border-radius: 5px;
+    display: flex;
+    font-weight: bold;
+    justify-content: space-around;
+    i {
+      color: #4661e6;
+    }
+  }
+  .roadmap__comments__upvotes__active {
+    width: 4rem;
+    border: solid 3px transparent;
+    padding-top: 0.5rem;
+    height: 1.4rem;
+    background-color: #4661e6;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+    font-weight: bold;
+  }
+}
 @media screen and (max-width: 1100px) and (min-width: 600px) {
-  container {
+  .container {
     width: 100%;
     background-color: #f2f2f2;
   }

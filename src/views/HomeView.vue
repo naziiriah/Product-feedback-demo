@@ -2,8 +2,14 @@
   <main class="main">
     <section class="home__aside">
       <header class="main__header">
-        <h1>frontend mentor</h1>
-        <h2>feedback board</h2>
+        <div>
+          <h1>frontend mentor</h1>
+          <h2>feedback board</h2>
+        </div>
+        <i
+          :class="modal ? 'fa-solid fa-xmark' : 'fa-solid fa-bars-staggered'"
+          @click="isModal"
+        ></i>
       </header>
       <aside class="home__asid">
         <section class="main__nav">
@@ -90,6 +96,46 @@
         </article>
       </section>
     </section>
+    <aside :class="modal ? 'modal__overlay' : 'modal__none'">
+      <div class="modal__empty" @click="isModal"></div>
+      <div class="modal__contents">
+        <aside class="modal__content">
+          <section class="main__nav">
+            <button
+              :class="categor.category === category ? 'active' : 'deactive'"
+              v-for="categor in Categories"
+              :key="categor.id"
+              @click="SetCategory(categor.category)"
+            >
+              {{ categor.category }}
+            </button>
+          </section>
+          <section class="main__nav">
+            <div class="main__roadmap">
+              <h1>roadmap</h1>
+              <h3 @click="toRoute('/roadmap', 0)">view</h3>
+            </div>
+            <div class="main__container">
+              <div class="home__roadmap--count">
+                <span class="roadmap__design--planned"></span>
+                <h3>planned</h3>
+                <h2>{{ Planned.length }}</h2>
+              </div>
+              <div class="home__roadmap--count">
+                <span class="roadmap__design--inprogress"></span>
+                <h3>in progress</h3>
+                <h2>{{ InProgress.length }}</h2>
+              </div>
+              <div class="home__roadmap--count">
+                <span class="roadmap__design--live"></span>
+                <h3>live</h3>
+                <h2>{{ live.length }}</h2>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </aside>
   </main>
 </template>
 
@@ -98,12 +144,10 @@ import { ref, watchEffect } from "vue";
 import createStore from "../store/index";
 import { useRouter } from "vue-router";
 
-let category = ref("all");
 const Store = createStore.state.Data.productRequests;
-const live = Store.filter((state) => state.status === "live");
-const InProgress = Store.filter((state) => state.status === "in-progress");
-const Planned = Store.filter((state) => state.status === "planned");
+let category = ref("all");
 let Productrequest = ref(Store);
+let modal = ref(false);
 
 watchEffect(() => {
   const Store = createStore.state.Data.productRequests;
@@ -141,16 +185,18 @@ export default {
   name: "HomeView",
   setup() {
     const router = useRouter();
-    return { router };
+    const Store = createStore.state.Data.productRequests;
+    const live = Store.filter((state) => state.status === "live");
+    const InProgress = Store.filter((state) => state.status === "in-progress");
+    const Planned = Store.filter((state) => state.status === "planned");
+    return { router, live, InProgress, Planned, Store };
   },
   data() {
     return {
       Categories: [],
       Productrequest,
       category: category,
-      live,
-      InProgress,
-      Planned,
+      modal,
     };
   },
   created() {
@@ -178,6 +224,9 @@ export default {
         this.$router.push(route);
       }
     },
+    isModal() {
+      modal.value = !modal.value;
+    },
   },
   computed: {},
   components: {},
@@ -189,45 +238,52 @@ export default {
   padding: 0%;
   margin: 0%;
 }
-@media screen and (min-width: 600px) and (max-width: 1099px) {
+@media screen and (max-width: 600px) {
   .main {
     width: 100%;
     background-color: #f2f2f2;
   }
   .home__aside {
     width: 100%;
-    margin: 0rem;
     display: flex;
     justify-content: space-around;
-    height: 15rem;
+    height: 5rem;
     align-items: center;
   }
   .main__header {
     background-image: url("../assets/suggestions/desktop/background-header.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    border-radius: 10px;
-    width: 13rem;
-    height: 10.5rem;
-    h1,
-    h2 {
-      text-align: start;
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    div {
+      h1,
+      h2 {
+        text-align: start;
+        color: #fff;
+        margin-left: 1rem;
+        text-transform: capitalize;
+      }
+      h1 {
+        border-top: 3.3rem solid transparent;
+        margin-top: -2rem;
+      }
+      h2 {
+        margin-top: -0rem;
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.833);
+      }
+    }
+    i {
       color: #fff;
-      margin-left: 1rem;
-      text-transform: capitalize;
-    }
-    h1 {
-      border-top: 3.3rem solid transparent;
-    }
-    h2 {
-      font-size: 15px;
-      color: rgba(255, 255, 255, 0.833);
+      margin: 2rem 1rem;
+      font-size: 27px;
     }
   }
   .home__asid {
-    display: flex;
-    justify-content: space-around;
-    width: 60%;
+    display: none;
   }
   .main__nav {
     width: 13rem;
@@ -297,7 +353,314 @@ export default {
   .home__main {
     width: 100%;
     margin: 0rem;
-    min-height: 310vh;
+    min-height: 480vh;
+  }
+  .home__header {
+    width: 100%;
+    height: 5rem;
+    background-color: #373f68;
+    border-radius: 0px;
+    margin: -0.01rem auto 2rem;
+    display: flex;
+    justify-content: flex-end;
+    .home__addfeedback--button {
+      padding: 3px 5px;
+      border: solid 2px transparent;
+      background-color: #ad1fea;
+      color: #f2f4fe;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: jost;
+      text-transform: capitalize;
+      height: 2.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+      margin-right: 1rem;
+    }
+  }
+  .home__article {
+    height: 15rem;
+    width: 90%;
+    background-color: #fff;
+    border-radius: 7px;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .home__votes {
+    width: 100%;
+    height: 100%;
+    order: 2;
+    .home__voted--deactive {
+      height: 2.3rem;
+      width: 6rem;
+      margin: 1rem 5%;
+      background-color: #f2f4fe;
+      font-weight: 600;
+      border-radius: 8px;
+      display: flex;
+      float: left;
+      justify-content: space-around;
+      i {
+        margin-top: 0.6rem;
+        font-weight: 800;
+        color: #4661e6;
+      }
+      h3 {
+        margin-top: 0.4rem;
+        color: #3a4374;
+      }
+    }
+    .home__voted--deactive:hover {
+      background-color: #cfd7ff;
+      cursor: pointer;
+    }
+    .home__voted--active {
+      height: 2.3rem;
+      width: 6rem;
+      margin: 1rem auto;
+      color: #f2f4fe;
+      background-color: #4661e6;
+      font-weight: 600;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-around;
+      cursor: pointer;
+      i {
+        margin-top: 0.6rem;
+        font-weight: 600;
+      }
+      h3 {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+  .home__category {
+    width: 90%;
+    margin: auto;
+    height: 100%;
+    cursor: pointer;
+    h2 {
+      color: #3a4374;
+      margin: 1rem 0rem 0.5rem;
+      font-weight: 600;
+      font-size: 18px;
+      text-align: start;
+    }
+    h4 {
+      color: #647196;
+      font-size: 16;
+      font-weight: 400;
+      font-family: jost;
+      text-align: start;
+    }
+    button {
+      padding: 4px 16px;
+      float: left;
+      margin-top: 1.5rem;
+      background-color: #f2f4ff;
+      color: #4661e6;
+      border-radius: 8px;
+      border: solid transparent 4px;
+      text-transform: capitalize;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  }
+  .home__comments {
+    width: 40%;
+    height: 100%;
+    position: relative;
+    order: 3;
+    top: -5rem;
+    left: 60%;
+    &--content {
+      width: 100%;
+      margin-top: 30%;
+    }
+  }
+  .home__roadmap--count {
+    display: flex;
+    justify-content: space-between;
+    height: 1.8rem;
+    h2 {
+      font-size: 14px;
+    }
+    h3 {
+      font-size: 15px;
+      font-weight: bold;
+      text-align: start;
+      width: 9rem;
+      text-transform: capitalize;
+    }
+    span {
+      height: 0.3rem;
+      width: 0.3rem;
+      border-radius: 50%;
+      margin-top: 0.4rem;
+    }
+    .roadmap__design--inprogress {
+      background-color: #ad1fea;
+    }
+    .roadmap__design--planned {
+      background-color: #f49f85;
+    }
+    .roadmap__design--live {
+      background-color: #62bcfa;
+    }
+  }
+  .main__container {
+    width: 90%;
+    margin: 1.3rem auto 0rem;
+  }
+  .modal__overlay {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 5rem;
+    display: flex;
+    animation: modalTransition 0.5s;
+    .modal__empty {
+      background-color: rgba(0, 0, 0, 0.78);
+      width: 30%;
+    }
+    .modal__contents {
+      width: 70%;
+      background-color: #f2f4ff;
+      animation: 0.75s modalDisplay ease-in-out;
+    }
+    .modal__content {
+      width: 100%;
+      height: 30rem;
+      .main__nav {
+        width: 13rem;
+        height: 10.5rem;
+        background-color: #fff;
+        border-radius: 10px;
+        padding-left: 0.4rem;
+        margin: 2.5rem auto;
+      }
+    }
+  }
+  .modal__none {
+    display: none;
+  }
+}
+@media screen and (min-width: 600px) and (max-width: 1099px) {
+  .main {
+    width: 100%;
+    background-color: #f2f2f2;
+  }
+  .home__aside {
+    width: 100%;
+    margin: 0rem;
+    display: flex;
+    justify-content: space-around;
+    height: 15rem;
+    align-items: center;
+  }
+  .main__header {
+    background-image: url("../assets/suggestions/desktop/background-header.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 10px;
+    width: 33%;
+    height: 10.5rem;
+    div {
+      h1,
+      h2 {
+        text-align: start;
+        color: #fff;
+        margin-left: 1rem;
+        text-transform: capitalize;
+      }
+      h1 {
+        border-top: 6.3rem solid transparent;
+      }
+      h2 {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.833);
+      }
+    }
+    i {
+      display: none;
+    }
+  }
+  .home__asid {
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+  }
+  .main__nav {
+    width: 45%;
+    height: 10.5rem;
+    background-color: #fff;
+    border-radius: 10px;
+    padding-left: 0.4rem;
+  }
+  .main__nav .main__roadmap {
+    display: flex;
+    width: 85%;
+    margin: auto;
+    height: 2rem;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #3a4374;
+      text-transform: capitalize;
+    }
+    h3 {
+      color: #8397f8;
+      font-size: 13px;
+      font-family: 400;
+      text-transform: capitalize;
+      cursor: pointer;
+    }
+    h3:hover {
+      text-decoration: underline;
+      color: #8397f8;
+    }
+  }
+  .main__nav .deactive:hover {
+    color: #4661e6;
+    background-color: #cfd7ff;
+    cursor: pointer;
+  }
+  .main__nav .active {
+    color: #fff;
+    background: #4661e6;
+    border: solid transparent 1px;
+    border-radius: 6px;
+    padding: 4px 10px;
+    height: 1.7rem;
+    margin: 0.5rem 0.4rem;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 17px;
+    justify-content: flex-start;
+    float: left;
+  }
+  .main__nav .deactive {
+    float: left;
+    background-color: #f2f4ff;
+    color: #4661e6;
+    border: solid transparent 1px;
+    border-radius: 6px;
+    padding: 4px 10px;
+    height: 1.7rem;
+    margin: 0.5rem 0.4rem;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 17px;
+    justify-content: flex-start;
+  }
+  .home__main {
+    width: 100%;
+    margin: 0rem;
+    min-height: 100vh;
   }
   .home__header {
     width: 95%;
@@ -446,6 +809,12 @@ export default {
     width: 90%;
     margin: 1.3rem auto 0rem;
   }
+  .modal__overlay {
+    display: none;
+  }
+  .modal__none {
+    display: none;
+  }
 }
 @media screen and (min-width: 1100px) {
   .main {
@@ -465,19 +834,24 @@ export default {
     border-radius: 10px;
     width: 15rem;
     height: 7rem;
-    h1,
-    h2 {
-      text-align: start;
-      color: #fff;
-      margin-left: 2rem;
-      text-transform: capitalize;
+    div {
+      h1,
+      h2 {
+        text-align: start;
+        color: #fff;
+        margin-left: 2rem;
+        text-transform: capitalize;
+      }
+      h1 {
+        border-top: 3.3rem solid transparent;
+      }
+      h2 {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.833);
+      }
     }
-    h1 {
-      border-top: 3.3rem solid transparent;
-    }
-    h2 {
-      font-size: 15px;
-      color: rgba(255, 255, 255, 0.833);
+    i {
+      display: none;
     }
   }
   .main__nav {
@@ -697,6 +1071,30 @@ export default {
   .main__container {
     width: 90%;
     margin: 0.5rem auto 0rem;
+  }
+  .modal__overlay {
+    display: none;
+  }
+  .modal__none {
+    display: none;
+  }
+}
+@keyframes modalTransition {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+@keyframes modalDisplay {
+  from {
+    margin-left: 90%;
+    width: 10%;
+  }
+  to {
+    margin-left: 0%;
+    width: 75%;
   }
 }
 </style>

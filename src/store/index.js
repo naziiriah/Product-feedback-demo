@@ -22,6 +22,7 @@ export default createStore({
     },
     addFeedback(state, props) {
       state.Data.productRequests.push(props);
+      alert("Added feedback!!!");
     },
     editFeedback(state, props) {
       state.Data.productRequests.find(
@@ -34,12 +35,14 @@ export default createStore({
         props.title;
       state.Data.productRequests.find((state) => state.id === props.id).status =
         props.status;
+      alert("Updated Feedback!!!");
     },
     deleteFeedback(state, props) {
       const newState = state.Data.productRequests.filter(
         (state) => state.id !== props.id
       );
       state.Data.productRequests = newState;
+      alert("Deleted!!!");
     },
     postCommment(state, props) {
       state.Data.productRequests
